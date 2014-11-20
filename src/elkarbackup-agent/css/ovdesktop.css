@@ -1,0 +1,19 @@
+.checkbox.no-indent,
+.checkbox.no-indent+.checkbox.inline.no-indent {
+  margin-left: 20;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 35px;
+  background-color: #929292;
+}
+
+.container {
+  width: auto;
+  padding: 0 15px;
+  padding-top: 5px;
+}
