@@ -1,6 +1,11 @@
 
 # Ignore Windows VM
 #####################
+vm/
 *sfx
 *rar
 *ova
+
+# Ignore atom-shell
+#####################
+atom-shell/
