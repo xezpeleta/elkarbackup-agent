@@ -5,7 +5,6 @@ Cygwin = function(){
 // Check if Cygwin is already installed
 //
 Cygwin.isInstalled = function(){
-  var path = require('path');
   var fs = require('fs');
   if ( fs.existsSync('c:\\cygwin') == true ) {
     return(true);
@@ -14,6 +13,9 @@ Cygwin.isInstalled = function(){
   }
 };
 
+//
+// Returns true if OpenSSH service is running. Too slow...
+//
 Cygwin.sshIsRunning = function(callback){
   var serviceManager = require('windows-service-manager');
   serviceManager.queryService('sshd' ,function(error, services) {
@@ -27,7 +29,7 @@ Cygwin.sshIsRunning = function(callback){
 };
 
 //
-// Cygwin Installation (.bat file)
+// Cygwin Installation (with .bat file). Provisional.
 //
 Cygwin.doInstallation = function(path, callback){
   var output = null;
@@ -42,6 +44,48 @@ Cygwin.doInstallation = function(path, callback){
       };
     });
   callback('sdafasdfa');
+};
+
+
+//
+// Cygwin Installation (step by step)
+//
+Cygwin.createDirectory = function() {
+  // create c:\cygwin
+};
+
+Cygwin.downloadSetup = function() {
+  // download Cygwin Setup
+};
+
+Cygwin.install = function() {
+  // run setup in quiet mode, install OpenSSH and Rsync
+};
+
+Cygwin.rebaseall = function() {
+  // Rebase your packages to avoid strange errors
+};
+
+Cygwin.importGroups = function() {
+  // Import local groups
+};
+
+Cygwin.importUsers = function() {
+  // Import local users
+};
+
+Cygwin.sshHostConfig = function() {
+  // SSH host config, generate service etc...
+};
+
+// This function shouldn't be in this file
+Cygwin.addFirewallRule = function() {
+  // Add firewall rules
+};
+
+// This function shouldn't be in this file
+Cygwin.sshStartService = function() {
+  // Start SSH service
 };
 
 module.exports = Cygwin;
