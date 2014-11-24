@@ -61,8 +61,15 @@ Cygwin.createDirectory = function() {
     });
 };
 
+// Download Cygwin installer. Not tested
 Cygwin.downloadSetup = function() {
-  // download Cygwin Setup
+  var http = require('http');
+  var fs = require('fs');
+
+  var file = fs.createWriteStream('setup-x86.exe');
+  var request = http.get('http://www.cygwin.com/setup-x86.exe', function(response) {
+    response.pipe(file);
+  });
 };
 
 Cygwin.install = function() {
