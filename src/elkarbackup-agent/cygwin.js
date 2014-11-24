@@ -50,8 +50,15 @@ Cygwin.doInstallation = function(path, callback){
 //
 // Cygwin Installation (step by step)
 //
+
+// Create Cygwin directory. Not tested
 Cygwin.createDirectory = function() {
-  // create c:\cygwin
+  var fs = requite('fs');
+  fs.mkdir('C:\\cygwin',
+    function (err) {
+      if (err) throw err;
+      console.log('Cannot create Cygwin directory: C:\\cygwin ');
+    });
 };
 
 Cygwin.downloadSetup = function() {
