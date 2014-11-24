@@ -1,5 +1,8 @@
 {
   "name"    : "elkarbackup-agent",
   "version" : "0.1.0",
-  "main"    : "main.js"
+  "main"    : "main.js",
+  "dependencies": {
+    "windows-service-manager": "~0.1.1"
+  }
 }
