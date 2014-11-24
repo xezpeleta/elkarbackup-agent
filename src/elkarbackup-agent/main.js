@@ -49,9 +49,22 @@ ipc.on('btnCygInstall', function(event, arg) {
   //output = cygwin.checkPreviousInstallation()
   if ( cygwin.isInstalled() == false ) {
     console.log('Cygwin not installed. Installing...');
-    cygwin.doInstallation(path, function (output) {
-      console.log(output);
-    });
+    //cygwin.doInstallation(path, function (output) {
+    //  console.log(output);
+    //});
+    try {
+      cygwin.createDirectory();
+      cygwin.downloadSetup(function(statusCode) {
+        if (statusCode == 200) {
+          console.log('Installer downloaded!');
+          cygwin.install();
+        } else {
+          console.log('Error: ' + statusCode);
+        }
+      });
+    } catch (ex) {
+      console.log('Cannot install Cygwin, admin privileges needed: ' + ex);
+    }
   } else {
     console.log('Cygwin already installed!');
     cygwin.sshIsRunning (function (running) {
