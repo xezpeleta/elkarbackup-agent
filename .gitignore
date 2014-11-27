@@ -10,3 +10,7 @@ vm/
 ################################
 atom-shell/
 src/elkarbackup-agent/node_modules/
+
+# Ignore Cygwin files
+#######################
+src/elkarbackup-agent/cygwin-files/
