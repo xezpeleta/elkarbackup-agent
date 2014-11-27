@@ -46,21 +46,21 @@ app.on('ready', function() {
 
 var ipc = require('ipc');
 ipc.on('btnCygInstall', function(event, arg) {
-  //output = cygwin.checkPreviousInstallation()
   if ( cygwin.isInstalled() == false ) {
     console.log('Cygwin not installed. Installing...');
-    //cygwin.doInstallation(path, function (output) {
-    //  console.log(output);
-    //});
     try {
       cygwin.createDirectory();
-      cygwin.downloadSetup(function(statusCode) {
-        if (statusCode == 200) {
-          console.log('Installer downloaded!');
-          cygwin.install();
-        } else {
-          console.log('Error: ' + statusCode);
+      cygwin.install(function(err) {
+        if (err) {
+          console.log(err);
+          return;
         }
+        console.log('installed');
+        //cygwin.importGroups();
+        //cygwin.importUsers();
+        //cygwin.sshHostConfig();
+        //cygwin.addFirewallRule();
+        //cygwin.sshStartService();
       });
     } catch (ex) {
       console.log('Cannot install Cygwin, admin privileges needed: ' + ex);
