@@ -3,6 +3,7 @@
   top: 0;
   width: 100%;
   height: 80px;
+  background: #2d3f50;
 }
 
 .footer {
@@ -17,7 +18,21 @@
 .container {
   width: auto;
   padding: 0 15px;
-  padding-top: 5px;
+  padding-top: 105px;
+}
+
+.btn-elkarbackup {
+  background: #2d3f50;
+  border-color: #2d3f50;
+  color: #fff;
+}
+
+.btn-elkarbackup:active,
+.btn-elkarbackup:focus,
+.btn-elkarbackup:hover {
+  background: #1e2a36;
+  border-color: #1e2a36;
+  color: #fff;
 }
 
 .btn-eb-ok {

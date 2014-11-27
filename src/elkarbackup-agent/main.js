@@ -27,7 +27,7 @@ app.on('ready', function() {
   ]);
   appIcon.setContextMenu(contextMenu);
   */
-  mainWindow = new BrowserWindow({width: 500, height: 300, icon: path.join(__dirname, 'img/ovdesktop-logo.png')});
+  mainWindow = new BrowserWindow({width: 600, height: 400, icon: path.join(__dirname, 'img/ovdesktop-logo.png')});
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
   // Tray action

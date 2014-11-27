@@ -10,23 +10,30 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/eb-agent.css" rel="stylesheet">
 
+    <script>
+      function cancel()
+      {
+        var ipc = require('ipc');
+        ipc.send('btnCancelInstall', {
+        });
+      }
+    </script>
   </head>
   <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="js/jquery-1.11.1.min.js"></script> -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
     <div class="header">
-      <img src="img/elkarbackup.png">
+      logo
     </div>
-
     <div class="container">
-        <h2>Hello!</h2>
-        <span>
-          This assistant will prepare your system to connect to Elkarbackup.
-          Cygwin and OpenSSH will be installed.
-        </span>
+
+      <form class="form-signin" role="form" id="login">
+        <h2 class="form-signin-heading">Installation</h2>
+        <span>Installing Cygwin...</span>
         <br />
-        <div class"btn-group pull-right">
-          <a class="btn btn-elkarbackup btn-eb-ok" href="#">Cancel</a>
-          <a class="btn btn-elkarbackup btn-eb-ok" href="check.html">Continue</a>
-        </div>
+        <button class="btn btn-lg btn-primary btn-block btn-eb-ok pull-right" type="submit" onclick="cancel()">Cancel</button>
       </form>
 
     </div>
