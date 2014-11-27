@@ -91,8 +91,8 @@ Cygwin.downloadSetup = function(callback) {
 Cygwin.install = function(callback) {
   // run setup in quiet mode, install OpenSSH and Rsync
   path = require('path')
-  var root = path.join(process.argv[1],'..','..')
-  var packagedir = path.join(root,'cygwin-files');
+  //var root = path.join(process.argv[1],'..','..')
+  var packagedir = path.join(process.argv[1],'cygwin-files');
   var setup = path.join(packagedir,'cygwin-setup.exe');
   var cygdir = process.env.SystemDrive + '\\cygwin';
   var packages = 'openssh,openssl,curl,cygrunsrv,rebase,wget,rsync';
