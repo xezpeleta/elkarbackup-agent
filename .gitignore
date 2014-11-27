@@ -6,6 +6,7 @@ vm/
 *rar
 *ova
 
-# Ignore atom-shell
-#####################
+# Ignore atom-shell and modules
+################################
 atom-shell/
+src/elkarbackup-agent/node_modules/
