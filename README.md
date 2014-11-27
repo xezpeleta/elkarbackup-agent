@@ -29,3 +29,14 @@ Configuration:
 
 Switch on the VM:
   - Network configuration: 192.168.33.20 (or 21, 22, 23...). Important: don't configure Gateway!
+
+
+## 4. Run the agent
+
+First, you need to download atom-shell and let it in the directory: E:\atom-shell (\\vboxsrv\elkarbackup-agent\atom-shell)
+
+Open a CMD console with administrator privileges, and execute this line:
+
+```
+\\vboxsrv\elkarbackup-agent\atom-shell\atom.exe \\vboxsrv\elkarbackup-agent\src\elkarbackup-agent
+```
