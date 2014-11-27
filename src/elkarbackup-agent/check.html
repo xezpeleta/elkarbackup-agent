@@ -17,6 +17,11 @@
         ipc.send('btnCancelCheck', {
         });
       }
+
+      onload = function() {
+        var ipc = require('ipc');
+        ipc.send('startCheck', {});
+      }
     </script>
   </head>
   <body>

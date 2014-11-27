@@ -27,7 +27,7 @@ app.on('ready', function() {
   ]);
   appIcon.setContextMenu(contextMenu);
   */
-  mainWindow = new BrowserWindow({width: 600, height: 400, icon: path.join(__dirname, 'img/ovdesktop-logo.png')});
+  mainWindow = new BrowserWindow({width: 600, height: 400, icon: path.join(__dirname, 'img/ovdesktop-logo.png'), title: 'ElkarBackup Agent'});
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
   // Tray action
@@ -45,6 +45,23 @@ app.on('ready', function() {
 });
 
 var ipc = require('ipc');
+
+ipc.on('startCheck', function(event, arg){
+  mainWindow.setTitle('Checking...');
+  if ( cygwin.isInstalled() == false ) {
+    console.log('Cygwin not installed. Installing...');
+  } else {
+    console.log('Cygwin already installed!');
+    cygwin.sshIsRunning (function (running) {
+      if (running == true) {
+        console.log('OpenSSH daemon is running');
+      } else {
+        console.log('OpenSSH daemon is NOT running');
+      }
+    });
+  }
+});
+
 ipc.on('btnCygInstall', function(event, arg) {
   if ( cygwin.isInstalled() == false ) {
     console.log('Cygwin not installed. Installing...');
