@@ -110,6 +110,14 @@ ipc.on('startCheck', function(event, arg){
   });
 });
 
+ipc.on('cancel', function(event,arg){
+  var dialog = require('dialog');
+  var r = dialog.showMessageBox(mainWindow, { type: 'info', buttons: [ 'Cancel', 'OK'], title: 'Cancel', message: 'Do you really want to cancel the installation and exit?'});
+  if (r == 1) {
+    process.exit(0);
+  }
+});
+
 
 /*
 ipc.on('btnCygInstall', function(event, arg) {

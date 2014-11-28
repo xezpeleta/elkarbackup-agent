@@ -20,6 +20,15 @@
       } catch(e) {}
     </script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#cancel').click(function(){
+          console.log('cancel::click()');
+          var ipc = require('ipc');
+          ipc.send('cancel', {});
+        });
+      });
+    </script>
   </head>
   <body>
     <div class="header">
@@ -35,8 +44,8 @@
         <br />
         <div class"btn-group">
           <div class="pull-right">
-            <a class="btn btn-elkarbackup btn-eb-ok" href="#">Cancel</a>
-            <a class="btn btn-elkarbackup btn-eb-ok" href="check.html">Continue</a>
+            <a type="button" class="btn btn-elkarbackup btn-eb-ok" id="cancel">Cancel</a>
+            <a class="btn btn-elkarbackup btn-eb-ok" id="continue" href="check.html">Continue</a>
           </div>
         </div>
       </form>
