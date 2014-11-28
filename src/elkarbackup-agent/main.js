@@ -46,10 +46,22 @@ app.on('ready', function() {
 
 var ipc = require('ipc');
 
+
+ipc.on('startInstallation', function(event, arg){
+  mainWindow.setTitle('Installing...');
+  console.log('Cygwin not installed. Installing...');
+});
+
+
+
 ipc.on('startCheck', function(event, arg){
   mainWindow.setTitle('Checking...');
   if ( cygwin.isInstalled() == false ) {
-    console.log('Cygwin not installed. Installing...');
+    // Installation
+    setTimeout(function(){
+      console.log('fake timeout');
+      mainWindow.loadUrl('file://' + __dirname + '/install.html');
+    },3000);
   } else {
     console.log('Cygwin already installed!');
     cygwin.sshIsRunning (function (running) {
@@ -61,6 +73,8 @@ ipc.on('startCheck', function(event, arg){
     });
   }
 });
+
+
 
 ipc.on('btnCygInstall', function(event, arg) {
   if ( cygwin.isInstalled() == false ) {
