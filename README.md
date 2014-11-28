@@ -31,6 +31,14 @@ Switch on the VM:
   - Network configuration: 192.168.33.20 (or 21, 22, 23...). Important: don't configure Gateway!
 
 
+## 4. Download Cygwin installer and files
+
+```bash
+cd src/elkarbackup-agent
+curl -L -o cygwin-files.zip "https://www.dropbox.com/s/zo2q6ykc3jeoio0/cygwin-files.zip?dl=1"
+unzip cygwin-files.zip
+```
+
 ## 4. Run the agent
 
 First, you need to download atom-shell and let it in the directory: E:\atom-shell (\\vboxsrv\elkarbackup-agent\atom-shell)
