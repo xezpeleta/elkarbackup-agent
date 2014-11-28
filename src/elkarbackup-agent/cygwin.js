@@ -103,6 +103,7 @@ Cygwin.install = function(callback) {
   //child = exec(setup + ' --quiet-mode --root ' + cygdir + ' --packages ' + packages + ' --site ' + source,
   // From Local directory
   child = exec(setup + ' --local-install --local-package-dir ' + packagedir + ' --quiet-mode --root ' + cygdir + ' --packages ' + packages,
+    {maxBuffer: 1024 * 500},
     function(error, stdout, stderr) {
       if (error != null) {
         console.log('exec error: ' + error);
