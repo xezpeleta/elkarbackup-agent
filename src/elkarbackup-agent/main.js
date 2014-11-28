@@ -3,7 +3,6 @@ var path = require('path');
 var BrowserWindow = require('browser-window');
 var Tray = require('tray');
 var Menu = require('menu');
-
 var cygwin = require('./cygwin');
 
 require('crash-reporter').start();
@@ -14,6 +13,19 @@ app.on('window-all-closed', function() {
   if (process.platform != 'darwin')
     app.quit();
 });
+
+// GARBITZEKO
+
+var wincmd = require('node-windows');
+
+wincmd.isAdminUser(function(isAdmin){
+ if (isAdmin) {
+ console.log('The user has administrative privileges.');
+ } else {
+ console.log('NOT AN ADMIN');
+ }
+});
+// FIN GARBITZEKO
 
 var mainWindow = null;
 var appIcon = null;
