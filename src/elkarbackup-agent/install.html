@@ -6,15 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Elkarbackup Agent</title>
 
-    <!-- Bootstrap -->
+    <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/eb-agent.css" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
     <script>
       var ipc = require('ipc');
       ipc.on('change-progress', function(i){
-        var now = document.getElementById("progressbar").aria-valuenow;
-        document.getElementById("progressbar").innerHTML="asdf" + now;
+        //var now = document.getElementById("progressbar").aria-valuenow;
+        //document.getElementById("progressbar").innerHTML="asdf" + now;
+        var value="80";
+        $('.progress-bar').css('width', value+'%').attr('aria-valuenow', value);
       });
 
       function cancel()
@@ -31,10 +37,6 @@
     </script>
   </head>
   <body>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!--<script src="js/jquery-1.11.1.min.js"></script> -->
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <!-- <script src="js/bootstrap.min.js"></script> -->
     <div class="header">
       <img class="logo" src="img/elkarbackup.png">
     </div>
@@ -43,7 +45,7 @@
         <h2>Installation</h2>
         <span>Installing Cygwin...</span>
         <div class="progress">
-          <div class="progress-bar progress-bar-striped active" id="progressbar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
             <span class="sr-only">45% Complete</span>
           </div>
         </div>
