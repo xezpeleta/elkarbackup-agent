@@ -11,6 +11,12 @@
     <link href="css/eb-agent.css" rel="stylesheet">
 
     <script>
+      var ipc = require('ipc');
+      ipc.on('change-progress', function(i){
+        var now = document.getElementById("progressbar").aria-valuenow;
+        document.getElementById("progressbar").innerHTML="asdf" + now;
+      });
+
       function cancel()
       {
         var ipc = require('ipc');
@@ -30,14 +36,14 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- <script src="js/bootstrap.min.js"></script> -->
     <div class="header">
-      <img clsas="logo" src="img/elkarbackup.png">
+      <img class="logo" src="img/elkarbackup.png">
     </div>
     <div class="container">
       <form role="form" id="insatll">
         <h2>Installation</h2>
         <span>Installing Cygwin...</span>
         <div class="progress">
-          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+          <div class="progress-bar progress-bar-striped active" id="progressbar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
             <span class="sr-only">45% Complete</span>
           </div>
         </div>
