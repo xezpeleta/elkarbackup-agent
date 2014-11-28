@@ -62,7 +62,7 @@ ipc.on('startInstallation', function(event, arg){
 
 ipc.on('startCheck', function(event, arg){
   mainWindow.setTitle('Checking...');
-  windows.isAdminUser(function (isAdmin){
+  windows.isAdminUser2(function (isAdmin){
     if ( isAdmin == true ) {
       if ( cygwin.isInstalled() == false ) {
         // Installation
@@ -72,6 +72,8 @@ ipc.on('startCheck', function(event, arg){
         },3000);
       } else {
         console.log('Cygwin already installed!');
+        // TODO: Add message on window and change Cancel button with Close button
+        /*
         cygwin.sshIsRunning (function (running) {
           if (running == true) {
             console.log('OpenSSH daemon is running');
@@ -79,9 +81,11 @@ ipc.on('startCheck', function(event, arg){
             console.log('OpenSSH daemon is NOT running');
           }
         });
+        */
       }
     } else {
       console.log('Must have admin privileges');
+      // TODO: Add message on window and change Cancel button with Close button
     }
   });
 });
