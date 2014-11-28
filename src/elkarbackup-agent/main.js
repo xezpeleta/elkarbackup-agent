@@ -51,7 +51,10 @@ ipc.on('startInstallation', function(event, arg){
   var ipc = require('ipc');
   mainWindow.setTitle('Installing...');
   console.log('Cygwin not installed. Installing...');
-  mainWindow.webContents.send('change-progress', '80');
+  mainWindow.webContents.send('change-progress', '10');
+  setTimeout(function(){
+    mainWindow.webContents.send('change-progress', '40');
+  }, 3000);
 });
 
 
