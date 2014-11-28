@@ -11,7 +11,14 @@
     <link href="css/eb-agent.css" rel="stylesheet">
 
     <!-- JS -->
-    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="./js/jquery-1.11.1.min.js"></script>
+    <script>
+    try {
+      $ = jQuery = module.exports;
+      // If you want module.exports to be empty, uncomment:
+      // module.exports = {};
+    } catch(e) {}
+    </script>
     <script src="js/bootstrap.min.js"></script>
 
     <script>
