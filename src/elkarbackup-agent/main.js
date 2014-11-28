@@ -52,7 +52,18 @@ ipc.on('startInstallation', function(event, arg){
   var ipc = require('ipc');
   mainWindow.setTitle('Installing...');
   console.log('Cygwin not installed. Installing...');
+
+  // change-message, 'Creating directory...'
   mainWindow.webContents.send('change-progress', '10');
+  cygwin.createDirectory();
+
+  // change-message, 'Installing Cygwin...'
+  mainWindow.webContents.send('change-progress', '20');
+  cygwin.install(function(err){
+    if (err){
+      console.log('Error installing Cygwin');
+    }
+  });
   setTimeout(function(){
     mainWindow.webContents.send('change-progress', '40');
   }, 3000);
@@ -91,7 +102,7 @@ ipc.on('startCheck', function(event, arg){
 });
 
 
-
+/*
 ipc.on('btnCygInstall', function(event, arg) {
   if ( cygwin.isInstalled() == false ) {
     console.log('Cygwin not installed. Installing...');
@@ -123,3 +134,4 @@ ipc.on('btnCygInstall', function(event, arg) {
     });
   }
 });
+*/
