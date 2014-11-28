@@ -39,7 +39,7 @@ curl -L -o cygwin-files.zip "https://www.dropbox.com/s/zo2q6ykc3jeoio0/cygwin-fi
 unzip cygwin-files.zip
 ```
 
-## 4. Run the agent
+## 5. Run the agent
 
 First, you need to download atom-shell and let it in the directory: E:\atom-shell (\\vboxsrv\elkarbackup-agent\atom-shell)
 
