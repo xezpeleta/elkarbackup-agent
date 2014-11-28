@@ -54,14 +54,18 @@ ipc.on('startInstallation', function(event, arg){
   console.log('Cygwin not installed. Installing...');
 
   // change-message, 'Creating directory...'
+  mainWindow.webContents.send('change-message', 'Creating directory <b>C:\\cygwin</b> ...');
   mainWindow.webContents.send('change-progress', '10');
   cygwin.createDirectory();
 
   // change-message, 'Installing Cygwin...'
+  mainWindow.webContents.send('change-message', 'Installing Cygwin ...');
   mainWindow.webContents.send('change-progress', '20');
   cygwin.install(function(err){
     if (err){
       console.log('Error installing Cygwin');
+    } else{
+      mainWindow.webContents.send('change-message', 'Cygwin installed successfully ...');
     }
   });
   setTimeout(function(){
@@ -72,9 +76,12 @@ ipc.on('startInstallation', function(event, arg){
 
 
 ipc.on('startCheck', function(event, arg){
+  var ipc = require('ipc');
   mainWindow.setTitle('Checking...');
+  mainWindow.webContents.send('change-message', 'Checking user privileges...');
   windows.isAdminUser2(function (isAdmin){
     if ( isAdmin == true ) {
+      mainWindow.webContents.send('change-message', 'Looking for any previous installation...');
       if ( cygwin.isInstalled() == false ) {
         // Installation
         setTimeout(function(){
@@ -83,6 +90,7 @@ ipc.on('startCheck', function(event, arg){
         },3000);
       } else {
         console.log('Cygwin already installed!');
+        mainWindow.webContents.send('change-message', 'There has been an error. Installation folder <b>C:\\cygwin</b> already exists!');
         // TODO: Add message on window and change Cancel button with Close button
         /*
         cygwin.sshIsRunning (function (running) {
@@ -96,6 +104,7 @@ ipc.on('startCheck', function(event, arg){
       }
     } else {
       console.log('Must have admin privileges');
+      mainWindow.webContents.send('change-message', 'The installation will be canceled. <b>You need administrator privileges</b>');
       // TODO: Add message on window and change Cancel button with Close button
     }
   });

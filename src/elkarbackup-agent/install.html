@@ -23,10 +23,12 @@
 
     <script>
       var ipc = require('ipc');
-      ipc.on('change-progress', function(i){
-        //var now = document.getElementById("progressbar").aria-valuenow;
-        //document.getElementById("progressbar").innerHTML="asdf" + now;
-        var value=i;
+
+      ipc.on('change-message', function(msg){
+        $('#message').html(msg);
+      });
+
+      ipc.on('change-progress', function(value){
         $('.progress-bar').css('width', value+'%').attr('aria-valuenow', value);
       });
 
@@ -50,7 +52,7 @@
     <div class="container">
       <form role="form" id="insatll">
         <h2>Installation</h2>
-        <span>Installing Cygwin...</span>
+        <span id="message">Installing Cygwin...</span>
         <div class="progress">
           <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
             <span class="sr-only">0% Complete</span>

@@ -21,6 +21,11 @@
     </script>
     <script src="js/bootstrap.min.js"></script>
     <script>
+      var ipc = require('ipc');
+      ipc.on('change-message', function(msg){
+        $('#message').html(msg);
+      });
+
       function cancel()
       {
         var ipc = require('ipc');
@@ -41,8 +46,8 @@
     <div class="container">
 
       <form role="form" id="check">
-        <h2>Check!</h2>
-        <span>Checking your system, looking for previous installation...</span>
+        <h2>Check</h2>
+        <span id="message">Checking your system...</span>
         <br />
         <button class="btn btn-elkarbackup btn-eb-ok pull-right" type="submit" onclick="cancel()">Cancel</button>
       </form>
