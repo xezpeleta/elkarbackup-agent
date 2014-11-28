@@ -32,12 +32,24 @@
         $('.progress-bar').css('width', value+'%').attr('aria-valuenow', value);
       });
 
-      function cancel()
-      {
+      ipc.on('change-cancel-button', function(msg){
+        $('#cancel').text(msg);
+        /*
+        $('#cancel').click(function(){
+        console.log('close::click()');
         var ipc = require('ipc');
-        ipc.send('btnCancelInstall', {
+        ipc.send('cancel', {});
         });
-      }
+        */
+      });
+
+      $(document).ready(function() {
+        $('#cancel').click(function(){
+          console.log('cancel::click()');
+          var ipc = require('ipc');
+          ipc.send('cancel', {});
+        });
+      });
 
       onload = function() {
         var ipc = require('ipc');
@@ -59,7 +71,7 @@
           </div>
         </div>
         <br />
-        <button class="btn btn-elkarbackup btn-eb-ok pull-right" type="submit" onclick="cancel()">Cancel</button>
+        <button class="btn btn-elkarbackup btn-eb-ok pull-right" type="submit">Cancel</button>
       </form>
 
     </div>

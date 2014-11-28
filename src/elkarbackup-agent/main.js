@@ -53,19 +53,21 @@ ipc.on('startInstallation', function(event, arg){
   mainWindow.setTitle('Installing...');
   console.log('Cygwin not installed. Installing...');
 
-  // change-message, 'Creating directory...'
   mainWindow.webContents.send('change-message', 'Creating directory <b>C:\\cygwin</b> ...');
   mainWindow.webContents.send('change-progress', '10');
   cygwin.createDirectory();
 
-  // change-message, 'Installing Cygwin...'
   mainWindow.webContents.send('change-message', 'Installing Cygwin ...');
   mainWindow.webContents.send('change-progress', '20');
   cygwin.install(function(err){
     if (err){
       console.log('Error installing Cygwin');
+      mainWindow.webContents.send('change-message', 'Error installing Cygwin');
+      //TODO: delete progress bar
+      mainWindow.webContents.send('change-cancel-button', 'Close');
     } else{
       mainWindow.webContents.send('change-message', 'Cygwin installed successfully ...');
+      mainWindow.webContents.send('change-progress', '80');
     }
   });
   setTimeout(function(){
@@ -96,7 +98,6 @@ ipc.on('startCheck', function(event, arg){
     } else {
       console.log('Must have admin privileges');
       mainWindow.webContents.send('change-message', 'The installation will be canceled. <b>You need administrator privileges</b>');
-      // TODO: Add message on window and change Cancel button with Close button
     }
   });
 });
