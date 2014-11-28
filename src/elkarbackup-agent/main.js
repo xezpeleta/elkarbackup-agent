@@ -91,16 +91,7 @@ ipc.on('startCheck', function(event, arg){
       } else {
         console.log('Cygwin already installed!');
         mainWindow.webContents.send('change-message', 'There has been an error. Installation folder <b>C:\\cygwin</b> already exists!');
-        // TODO: Add message on window and change Cancel button with Close button
-        /*
-        cygwin.sshIsRunning (function (running) {
-          if (running == true) {
-            console.log('OpenSSH daemon is running');
-          } else {
-            console.log('OpenSSH daemon is NOT running');
-          }
-        });
-        */
+        mainWindow.webContents.send('change-cancel-button', 'Close');
       }
     } else {
       console.log('Must have admin privileges');
