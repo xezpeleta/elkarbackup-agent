@@ -3,7 +3,9 @@ var path = require('path');
 var BrowserWindow = require('browser-window');
 var Tray = require('tray');
 var Menu = require('menu');
+
 var cygwin = require('./cygwin');
+var windows = require('./windows');
 
 require('crash-reporter').start();
 
@@ -13,19 +15,6 @@ app.on('window-all-closed', function() {
   if (process.platform != 'darwin')
     app.quit();
 });
-
-// GARBITZEKO
-
-var wincmd = require('node-windows');
-
-wincmd.isAdminUser(function(isAdmin){
- if (isAdmin) {
- console.log('The user has administrative privileges.');
- } else {
- console.log('NOT AN ADMIN');
- }
-});
-// FIN GARBITZEKO
 
 var mainWindow = null;
 var appIcon = null;
@@ -73,22 +62,28 @@ ipc.on('startInstallation', function(event, arg){
 
 ipc.on('startCheck', function(event, arg){
   mainWindow.setTitle('Checking...');
-  if ( cygwin.isInstalled() == false ) {
-    // Installation
-    setTimeout(function(){
-      console.log('fake timeout');
-      mainWindow.loadUrl('file://' + __dirname + '/install.html');
-    },3000);
-  } else {
-    console.log('Cygwin already installed!');
-    cygwin.sshIsRunning (function (running) {
-      if (running == true) {
-        console.log('OpenSSH daemon is running');
+  windows.isAdminUser(function (isAdmin){
+    if ( isAdmin == true ) {
+      if ( cygwin.isInstalled() == false ) {
+        // Installation
+        setTimeout(function(){
+          console.log('fake timeout');
+          mainWindow.loadUrl('file://' + __dirname + '/install.html');
+        },3000);
       } else {
-        console.log('OpenSSH daemon is NOT running');
+        console.log('Cygwin already installed!');
+        cygwin.sshIsRunning (function (running) {
+          if (running == true) {
+            console.log('OpenSSH daemon is running');
+          } else {
+            console.log('OpenSSH daemon is NOT running');
+          }
+        });
       }
-    });
-  }
+    } else {
+      console.log('Must have admin privileges');
+    }
+  });
 });
 
 
