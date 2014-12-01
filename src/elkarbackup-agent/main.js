@@ -85,11 +85,11 @@ ipc.on('startCheck', function(event, arg){
     if ( isAdmin == true ) {
       mainWindow.webContents.send('change-message', 'Looking for any previous installation...');
       if ( cygwin.isInstalled() == false ) {
-        // Installation
+        // Remove this
         setTimeout(function(){
           console.log('fake timeout');
           mainWindow.loadUrl('file://' + __dirname + '/install.html');
-        },3000);
+        },1000);
       } else {
         console.log('Cygwin already installed!');
         mainWindow.webContents.send('change-message', 'There has been an error. Installation folder <b>C:\\cygwin</b> already exists!');
