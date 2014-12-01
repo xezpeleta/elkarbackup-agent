@@ -70,9 +70,6 @@ ipc.on('startInstallation', function(event, arg){
       mainWindow.webContents.send('change-progress', '80');
     }
   });
-  setTimeout(function(){
-    mainWindow.webContents.send('change-progress', '40');
-  }, 3000);
 });
 
 
