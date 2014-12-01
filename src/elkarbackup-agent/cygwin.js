@@ -109,9 +109,9 @@ Cygwin.install = function(callback) {
         console.log('exec error: ' + error);
         callback(error);
         return;
-      };
-
-      callback();
+      } else {
+        callback();
+      }
   });
 };
 
@@ -126,9 +126,9 @@ Cygwin.rebaseall = function(callback) {
         console.log('exec error: ' + error);
         callback(error);
         return;
+      } else {
+        callback();
       }
-
-      callback();
   });
 };
 
@@ -136,45 +136,48 @@ Cygwin.importGroups = function(callback) {
   // Import local groups
   var path = require('path')
   var exec = require('child_process').exec, child;
-  child = exec(path.join(process.env.SystemDrive,'cygwin\\bin\\bash') + ' -c \'PATH=/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin mkgroup -l\'>%SystemDrive%\cygwin\etc\group',
+  child = exec(path.join(process.env.SystemDrive,'cygwin\\bin\\bash') + ' -c \'PATH=/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin mkgroup -l\'>'+process.env.SystemDrive+'\\cygwin\\etc\\group',
   function(error, stdout, stderr) {
     if (error != null) {
       console.log('exec error: ' + error);
       callback(error);
       return;
+    } else {
+      callback();
     }
   });
-  callback();
 };
 
 Cygwin.importUsers = function(callback) {
   // Import local users
   var path = require('path')
   var exec = require('child_process').exec, child;
-  child = exec(path.join(process.env.SystemDrive,'cygwin\\bin\\bash') + '-c \'PATH=/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin mkpasswd -l\'>%SystemDrive%\cygwin\etc\passwd',
+  child = exec(path.join(process.env.SystemDrive,'cygwin\\bin\\bash') + ' -c \'PATH=/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin mkpasswd -l\'>'+process.env.SystemDrive+'\\cygwin\\etc\\passwd',
   function(error, stdout, stderr) {
     if (error != null) {
       console.log('exec error: ' + error);
       callback(error);
       return;
+    } else {
+      callback();
     }
   });
-  callback();
 };
 
 Cygwin.sshHostConfig = function(callback) {
   // SSH host config, generate service etc...
   var path = require('path')
   var exec = require('child_process').exec, child;
-  child = exec(path.join(process.env.SystemDrive,'cygwin\\bin\\bash') + '-c \'PATH=/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin /usr/bin/ssh-host-config -y -c \"ntsecbinmode tty\" -w \"abc&&123!!\" \'',
+  child = exec(path.join(process.env.SystemDrive,'cygwin\\bin\\bash') + ' -c \'PATH=/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin /usr/bin/ssh-host-config -y -c \"ntsecbinmode tty\" -w \"abc&&123!!\" \'',
   function(error, stdout, stderr) {
     if (error != null) {
       console.log('exec error: ' + error);
       callback(error);
       return;
+    } else {
+      callback();
     }
   });
-  callback();
 };
 
 // This function shouldn't be in this file
@@ -188,15 +191,18 @@ Cygwin.addFirewallRule = function(callback) {
     if (error != null) {
       console.log('exec error: ' + error);
       callback(error);
-      return;
-    }
-  });
-
-  // todo: change command string or use node
-  child = exec('if exist %Systemroot%\\system32\\netsh.exe netsh advfirewall firewall add rule name=\"ssh\" dir=in action=allow protocol=TCP localport=22',
-  function(error, stdout, stderr) {
-    if (error != null) {
-      console.log('exec error: ' + error);
+    } else {
+      // todo: change command string or use node
+      child = exec('if exist %Systemroot%\\system32\\netsh.exe netsh advfirewall firewall add rule name=\"ssh\" dir=in action=allow protocol=TCP localport=22',
+      function(error, stdout, stderr) {
+        if (error != null) {
+          console.log('exec error: ' + error);
+          callback(error);
+        } else {
+          console.log('Firewall configured');
+          callback();
+        }
+      });
     }
   });
 };

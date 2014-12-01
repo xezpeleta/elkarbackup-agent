@@ -68,6 +68,34 @@ ipc.on('startInstallation', function(event, arg){
     } else{
       mainWindow.webContents.send('change-message', 'Cygwin installed successfully ...');
       mainWindow.webContents.send('change-progress', '80');
+      cygwin.importGroups(function(err){
+        if (err){
+          console.log('Error importing groups');
+        } else {
+          console.log('Groups imported');
+          cygwin.importUsers(function(err){
+            if(err){
+              console.log('Error importing users');
+            } else {
+              console.log('Users imported');
+              cygwin.sshHostConfig(function(err) {
+                if(err) {
+                  console.log('Error confuring SSH');
+                } else {
+                  console.log('SSH configured');
+                  cygwin.addFirewallRule(function(err){
+                    if(err){
+                      console.log('Error configuring Firewall');
+                    } else {
+                      console.log('Firewall configured successfully');
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
     }
   });
 });
