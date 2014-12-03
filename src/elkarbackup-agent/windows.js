@@ -1,6 +1,7 @@
 Windows = function(){
 };
 
+/*
 Windows.isAdminUser = function(callback){
   var wincmd = require('node-windows');
   wincmd.isAdminUser(function(isAdmin){
@@ -14,8 +15,9 @@ Windows.isAdminUser = function(callback){
     }
   });
 };
+*/
 
-Windows.isAdminUser2 = function(callback){
+Windows.isAdminUser = function(callback){
   var exec = require('child_process').exec, child;
   child = exec('NET SESSION',
     function(error, stdout, stderr) {
@@ -27,5 +29,55 @@ Windows.isAdminUser2 = function(callback){
       }
     });
 };
+
+
+Windows.addFirewallRule = function(callback) {
+  // Add firewall rules
+  var path = require('path')
+  var exec = require('child_process').exec, child;
+  // todo: change command string or use node
+  child = exec('if exist %Systemroot%\\system32\\netsh.exe netsh advfirewall firewall add rule name=\"SSHD\" dir=in action=allow program=\"c:\\cygwin\\usr\\sbin\\sshd.exe\"',
+  function(error, stdout, stderr) {
+    if (error != null) {
+      console.log('exec error: ' + error);
+      callback(error);
+    } else {
+      // todo: change command string or use node
+      child = exec('if exist %Systemroot%\\system32\\netsh.exe netsh advfirewall firewall add rule name=\"ssh\" dir=in action=allow protocol=TCP localport=22',
+      function(error, stdout, stderr) {
+        if (error != null) {
+          console.log('exec error: ' + error);
+          callback(error);
+        } else {
+          console.log('Firewall configured');
+          callback();
+        }
+      });
+    }
+  });
+};
+
+
+Windows.startSshService = function(callback) {
+  // Start SSH service
+  var Service = require('node-windows').Service;
+  var svc = new Service({
+    name: 'sshd',
+    description: 'CYGWIN sshd',
+    script: 'c:\\cygwin\\bin\\cygrunsrv.exe'
+  });
+
+  svc.on('alreadyinstalled', function(){
+    svc.start();
+    callback();
+  });
+
+  svc.on('error', function(){
+    callback('Error starting SSH service');
+  });
+
+  svc.install();
+};
+
 
 module.exports = Windows;

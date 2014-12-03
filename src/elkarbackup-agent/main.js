@@ -95,13 +95,26 @@ ipc.on('startInstallation', function(event, arg){
                   console.log('SSH configured');
                   mainWindow.webContents.send('change-message', 'Configuring firewall rules ...');
                   mainWindow.webContents.send('change-progress', '90');
-                  cygwin.addFirewallRule(function(err){
+                  windows.addFirewallRule(function(err){
                     if(err){
                       console.log('Error configuring Firewall');
                       mainWindow.webContents.send('change-message', 'Error configuring firewall rules');
                       mainWindow.webContents.send('change-cancel-button', 'Close');
                     } else {
                       console.log('Firewall configured successfully');
+                      mainWindow.webContents.send('change-message', 'Starting SSH service ...');
+                      mainWindow.webContents.send('change-progress', '95');
+                      windows.startSshService(function(err){
+                        if(err){
+                          console.log('Error starting SSH service');
+                          mainWindow.webContents.send('change-message', 'Error starting SSH service');
+                          mainWindow.webContents.send('change-cancel-button', 'Close');
+                        } else {
+                          console.log('SSH service started successfully');
+                          mainWindow.webContents.send('change-message', 'Installation finished successfully!');
+                          mainWindow.webContents.send('change-progress', '100');
+                        }
+                      });
                     }
                   });
                 }
@@ -120,7 +133,7 @@ ipc.on('startCheck', function(event, arg){
   var ipc = require('ipc');
   mainWindow.setTitle('Checking...');
   mainWindow.webContents.send('change-message', 'Checking user privileges...');
-  windows.isAdminUser2(function (isAdmin){
+  windows.isAdminUser(function (isAdmin){
     if ( isAdmin == true ) {
       mainWindow.webContents.send('change-message', 'Looking for any previous installation...');
       if ( cygwin.isInstalled() == false ) {
@@ -148,38 +161,3 @@ ipc.on('cancel', function(event,arg){
     process.exit(0);
   }
 });
-
-
-/*
-ipc.on('btnCygInstall', function(event, arg) {
-  if ( cygwin.isInstalled() == false ) {
-    console.log('Cygwin not installed. Installing...');
-    try {
-      cygwin.createDirectory();
-      cygwin.install(function(err) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        console.log('installed');
-        //cygwin.importGroups();
-        //cygwin.importUsers();
-        //cygwin.sshHostConfig();
-        //cygwin.addFirewallRule();
-        //cygwin.sshStartService();
-      });
-    } catch (ex) {
-      console.log('Cannot install Cygwin, admin privileges needed: ' + ex);
-    }
-  } else {
-    console.log('Cygwin already installed!');
-    cygwin.sshIsRunning (function (running) {
-      if (running == true) {
-        console.log('OpenSSH daemon is running');
-      } else {
-        console.log('OpenSSH daemon is NOT running');
-      }
-    });
-  }
-});
-*/

@@ -180,36 +180,4 @@ Cygwin.sshHostConfig = function(callback) {
   });
 };
 
-// This function shouldn't be in this file
-Cygwin.addFirewallRule = function(callback) {
-  // Add firewall rules
-  var path = require('path')
-  var exec = require('child_process').exec, child;
-  // todo: change command string or use node
-  child = exec('if exist %Systemroot%\\system32\\netsh.exe netsh advfirewall firewall add rule name=\"SSHD\" dir=in action=allow program=\"c:\\cygwin\\usr\\sbin\\sshd.exe\"',
-  function(error, stdout, stderr) {
-    if (error != null) {
-      console.log('exec error: ' + error);
-      callback(error);
-    } else {
-      // todo: change command string or use node
-      child = exec('if exist %Systemroot%\\system32\\netsh.exe netsh advfirewall firewall add rule name=\"ssh\" dir=in action=allow protocol=TCP localport=22',
-      function(error, stdout, stderr) {
-        if (error != null) {
-          console.log('exec error: ' + error);
-          callback(error);
-        } else {
-          console.log('Firewall configured');
-          callback();
-        }
-      });
-    }
-  });
-};
-
-// This function shouldn't be in this file
-Cygwin.sshStartService = function() {
-  // Start SSH service
-};
-
 module.exports = Cygwin;
