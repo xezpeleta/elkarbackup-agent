@@ -7,6 +7,7 @@ We are trying to build a graphical installer to make Elkarbackup configuration e
 
 Requirements:
   - VirtualBox
+  - Vagrant
 
 ### 1. Download source
 You can download zip file from Github, or download it with 'git clone':
@@ -14,22 +15,19 @@ You can download zip file from Github, or download it with 'git clone':
 git clone https://github.com/xezpeleta/elkarbackup-agent.git
 ```
 
-### 2. Download Windows VM
-Let's download and build Windows7 or Windows8 VM for testing purposes
+### 2. Build an empty Windows VM for testing purposes
 ```
-./utils/download-Win7-vm.sh
+cd vm
+vagrant up
 ```
-It will create an OVA file ('vm' directory). Now, you can open it with *VirtualBox*.
 
-## 3. Run the VM with VirtualBox
+## 3. Change network configuration
 
-Configuration:
-  - Network adapter 2: internal
-  - Shared folders: create a shared folder to the project source code "elkarbackup-agent" (auto-mount)
-
-Switch on the VM:
-  - Network configuration: 192.168.33.20 (or 21, 22, 23...). Important: don't configure Gateway!
-
+From Windows, Start -> Run -> `\\vboxsrv\elkarbackup-agent`. Find the file:
+```
+utils\configure-ip-address.bat
+```
+Run as administrator... it will change your VM "Adaptor 3" IP address to: *192.168.33.21*
 
 ## 4. Download Cygwin installer and files
 
