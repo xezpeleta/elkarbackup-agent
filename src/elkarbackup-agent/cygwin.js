@@ -186,7 +186,7 @@ Cygwin.addFirewallRule = function(callback) {
   var path = require('path')
   var exec = require('child_process').exec, child;
   // todo: change command string or use node
-  child = exec('if exist %Systemroot%\\system32\\netsh.exe netsh advfirewall firewall add rule name=\"SSHD\" dir=in action=allow program=\"c:\\cygwin\\usr\\sbin\\sshd.exe\" SSHD enable=yes',
+  child = exec('if exist %Systemroot%\\system32\\netsh.exe netsh advfirewall firewall add rule name=\"SSHD\" dir=in action=allow program=\"c:\\cygwin\\usr\\sbin\\sshd.exe\"',
   function(error, stdout, stderr) {
     if (error != null) {
       console.log('exec error: ' + error);
