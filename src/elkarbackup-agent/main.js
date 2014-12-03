@@ -66,26 +66,40 @@ ipc.on('startInstallation', function(event, arg){
       //TODO: delete progress bar
       mainWindow.webContents.send('change-cancel-button', 'Close');
     } else{
-      mainWindow.webContents.send('change-message', 'Cygwin installed successfully ...');
-      mainWindow.webContents.send('change-progress', '80');
+      mainWindow.webContents.send('change-message', 'Cygwin installed successfully. Importing users ...');
+      mainWindow.webContents.send('change-progress', '60');
       cygwin.importGroups(function(err){
         if (err){
           console.log('Error importing groups');
+          mainWindow.webContents.send('change-message', 'Error importing groups');
+          mainWindow.webContents.send('change-cancel-button', 'Close');
         } else {
           console.log('Groups imported');
+          mainWindow.webContents.send('change-message', 'Importing groups ...');
+          mainWindow.webContents.send('change-progress', '75');
           cygwin.importUsers(function(err){
             if(err){
               console.log('Error importing users');
+              mainWindow.webContents.send('change-message', 'Error importing users');
+              mainWindow.webContents.send('change-cancel-button', 'Close');
             } else {
               console.log('Users imported');
+              mainWindow.webContents.send('change-message', 'Configuring SSH service ...');
+              mainWindow.webContents.send('change-progress', '80');
               cygwin.sshHostConfig(function(err) {
                 if(err) {
-                  console.log('Error confuring SSH');
+                  console.log('Error configuring SSH');
+                  mainWindow.webContents.send('change-message', 'Error configuring SSH service');
+                  mainWindow.webContents.send('change-cancel-button', 'Close');
                 } else {
                   console.log('SSH configured');
+                  mainWindow.webContents.send('change-message', 'Configuring firewall rules ...');
+                  mainWindow.webContents.send('change-progress', '90');
                   cygwin.addFirewallRule(function(err){
                     if(err){
                       console.log('Error configuring Firewall');
+                      mainWindow.webContents.send('change-message', 'Error configuring firewall rules');
+                      mainWindow.webContents.send('change-cancel-button', 'Close');
                     } else {
                       console.log('Firewall configured successfully');
                     }
