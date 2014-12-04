@@ -57,7 +57,7 @@ Windows.addFirewallRule = function(callback) {
   });
 };
 
-
+/*
 Windows.startSshService = function(callback) {
   // Start SSH service
   var Service = require('node-windows').Service;
@@ -77,6 +77,20 @@ Windows.startSshService = function(callback) {
   });
 
   svc.install();
+};
+*/
+
+Windows.startSshService = function(callback) {
+  var sm = require('windows-service-manager');
+  sm.startService('sshd', 10, function(err, services) {
+    if (err == 'timeout'){
+      console.log('Error: ' + err);
+      callback(err);
+    } else {
+      console.log('Started');
+      callback();
+    }
+  });
 };
 
 
