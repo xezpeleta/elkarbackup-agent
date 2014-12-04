@@ -38,6 +38,6 @@ Run as administrator... it will change your VM "Adaptor 3" IP address to: *192.1
 
 ## 5. Run the installer
 
-Start -> Run -> \\vboxsrv -> elkarbackup-agent
+Start -> Run -> \\\\vboxsrv -> elkarbackup-agent
 
 Right click on **eb-installer.bat** and select "Run as administrator"
