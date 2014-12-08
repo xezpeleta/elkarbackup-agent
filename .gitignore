@@ -1,7 +1,8 @@
 
 # Ignore Windows VM
 #####################
-vm/.vagrant
+vm/win7/.vagrant
+vm/win8/.vagrant
 *sfx
 *rar
 *ova
