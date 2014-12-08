@@ -23,7 +23,7 @@ Bootstrap will download and unzip Atom-Shell and Cygwin files
 
 ### 3. Build an empty Windows VM for testing purposes
 ```
-cd vm
+cd vm/win7
 vagrant up
 ```
 
@@ -31,7 +31,7 @@ vagrant up
 
 From Windows, Start -> Run -> `\\vboxsrv\elkarbackup-agent`. Find the file:
 ```
-utils\configure-ip-address.bat
+utils\configure-ip-address-win7.bat
 ```
 Run as administrator... it will change your VM "Adaptor 3" IP address to: *192.168.33.21*
 
