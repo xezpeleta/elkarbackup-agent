@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "http://aka.ms/vagrant-win81-ie11"
+  #config.ssh.username = "vagrant"
+  #config.ssh.password = "vagrant"
+  config.vm.communicator = "winrm"
+  config.vm.synced_folder "../../", "/elkarbackup-agent"
+  config.vm.network :forwarded_port, guest: 3389, host: 3380, id: "rdp", auto_correct:true
+  config.vm.communicator = "winrm"
+  config.vm.network :forwarded_port, guest: 5985, host: 5986, id: "winrm", auto_correct:true 
+  config.vm.network :private_network, ip: "192.168.33.20"
+  config.vm.provider :virtualbox do |vb|
+    vb.name = "ebagent-win7"
+    vb.gui = true
+    vb.cpus = 2
+    vb.memory = 2048
+  end
+end
