@@ -4,14 +4,14 @@ Cygwin = function(){
 //
 // Check if Cygwin is already installed
 //
-Cygwin.isInstalled = function(){
+Cygwin.isInstalled = function(callback){
   var fs = require('fs');
 
   var cygdir = process.env.SystemDrive + '\\cygwin';
   if ( fs.existsSync(cygdir) == true ) {
-    return(true);
+    callback(true);
   } else {
-    return(false);
+    callback(false);
   }
 };
 

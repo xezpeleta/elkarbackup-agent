@@ -131,8 +131,31 @@ ipc.on('startInstallation', function(event, arg){
 
 ipc.on('startCheck', function(event, arg){
   var ipc = require('ipc');
+  var async = require('async');
   mainWindow.setTitle('Checking...');
   mainWindow.webContents.send('change-message', 'Checking user privileges...');
+  async.series([
+    windows.isAdminUser(function(isAdmin){
+      if (isAdmin == true) {
+        mainWindow.webContents.send('change-message', 'Looking for any previous installation...');
+      } else {
+        console.log('Must have admin privileges');
+        mainWindow.webContents.send('change-message', 'The installation will be canceled. <b>You need administrator privileges</b>');
+      }
+    }),
+    cygwin.isInstalled(function(isInstalled){
+      if (isInstalled == false) {
+        mainWindow.loadUrl('file://' + __dirname + '/install.html');
+      } else {
+        console.log('Cygwin already installed!');
+        mainWindow.webContents.send('change-message', 'There has been an error. Installation folder <b>C:\\cygwin</b> already exists!');
+        mainWindow.webContents.send('change-cancel-button', 'Close');
+      }
+    })],
+  function(err, results){
+    console.log('Results:' + results);
+  });
+  /*
   windows.isAdminUser(function (isAdmin){
     if ( isAdmin == true ) {
       mainWindow.webContents.send('change-message', 'Looking for any previous installation...');
@@ -152,6 +175,7 @@ ipc.on('startCheck', function(event, arg){
       mainWindow.webContents.send('change-message', 'The installation will be canceled. <b>You need administrator privileges</b>');
     }
   });
+  */
 });
 
 ipc.on('cancel', function(event,arg){
