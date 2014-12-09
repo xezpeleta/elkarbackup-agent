@@ -155,27 +155,6 @@ ipc.on('startCheck', function(event, arg){
   function(err, results){
     console.log('Results:' + results);
   });
-  /*
-  windows.isAdminUser(function (isAdmin){
-    if ( isAdmin == true ) {
-      mainWindow.webContents.send('change-message', 'Looking for any previous installation...');
-      if ( cygwin.isInstalled() == false ) {
-        // Remove this
-        setTimeout(function(){
-          console.log('fake timeout');
-          mainWindow.loadUrl('file://' + __dirname + '/install.html');
-        },1000);
-      } else {
-        console.log('Cygwin already installed!');
-        mainWindow.webContents.send('change-message', 'There has been an error. Installation folder <b>C:\\cygwin</b> already exists!');
-        mainWindow.webContents.send('change-cancel-button', 'Close');
-      }
-    } else {
-      console.log('Must have admin privileges');
-      mainWindow.webContents.send('change-message', 'The installation will be canceled. <b>You need administrator privileges</b>');
-    }
-  });
-  */
 });
 
 ipc.on('cancel', function(event,arg){
